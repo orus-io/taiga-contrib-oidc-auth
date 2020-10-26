@@ -40,7 +40,7 @@ gulp.task('compile', function() {
         .pipe($.jade({pretty: true}))
         .pipe($.angularTemplatecache({
             transformUrl: function(url) {
-                return '/plugins/oidc-auth/' + url;
+                return '/plugins/oidc-auth' + url;
             }
         }))
         .pipe($.remember('jade'));
@@ -63,9 +63,9 @@ gulp.task('compile', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch([paths.jade, paths.coffee, paths.images], ['copy-images', 'compile']);
+    gulp.watch([paths.jade, paths.coffee, paths.images], gulp.parallel(['copy-images', 'compile']));
 });
 
-gulp.task('default', ['copy-config', 'copy-images', 'compile', 'watch']);
+gulp.task('default', gulp.parallel(['copy-config', 'copy-images', 'compile', 'watch']));
 
-gulp.task('build', ['copy-config', 'copy-images', 'compile', ]);
+gulp.task('build', gulp.parallel(['copy-config', 'copy-images', 'compile', ]));
